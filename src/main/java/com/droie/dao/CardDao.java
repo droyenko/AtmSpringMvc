@@ -23,7 +23,7 @@ public interface CardDao {
 
     void blockCard(String number);
 
-    boolean isBlocked(String number);
+    Boolean isBlocked(String number);
 
     int getAttempt(String number);
 }

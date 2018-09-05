@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Card is either blocked or doesn't exits</h1>
+<h1>${message}</h1>
 <a href="/">Back</a>
 </body>
 </html>

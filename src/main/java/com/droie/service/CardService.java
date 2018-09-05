@@ -24,9 +24,9 @@ public interface CardService {
 
     void blockCard(String number);
 
-    boolean isBlocked(String number);
+    String isBlocked(String number);
 
     int getAttempt(String number);
 
-    boolean checkCard(String number);
+    String checkPin(Integer pin);
 }

@@ -1,8 +1,10 @@
-package com.droie.dao;
+package com.droie.dao.impl;
 
+import com.droie.dao.CardDao;
 import com.droie.entity.Card;
 import com.droie.mapper.CardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -59,9 +61,13 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public boolean isBlocked(String number) {
+    public Boolean isBlocked(String number) {
         String sql = "SELECT blocked FROM card WHERE card_number=?";
-        return jdbcTemplate.queryForObject(sql, new Object[] {number}, Boolean.class);
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[] {number}, Boolean.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override

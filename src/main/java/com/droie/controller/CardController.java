@@ -83,8 +83,33 @@ public class CardController {
     }
 
     @PostMapping("/checkCard")
-    public String checkCard(@ModelAttribute("card") Card card) {
-        return cardService.checkCard(card.getNumber()) ? "pinPage" : "error";
+    public String checkCard(@ModelAttribute("card") Card card, Model model) {
+        String pageToShow;
+        String message = cardService.isBlocked(card.getNumber());
+
+        if (message !=null) {
+            model.addAttribute("message", message);
+            pageToShow = "error";
+        } else {
+            pageToShow = "pinPage";
+        }
+
+        return pageToShow;
+    }
+
+    @PostMapping("/checkPin")
+    public String checkPin(@ModelAttribute("card") Card card, Model model) {
+        String pageToShow;
+        String message = cardService.isBlocked(card.getNumber());
+
+        if (message !=null) {
+            model.addAttribute("message", message);
+            pageToShow = "error";
+        } else {
+            pageToShow = "pinPage";
+        }
+
+        return pageToShow;
     }
 
 }
