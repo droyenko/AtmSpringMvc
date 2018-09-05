@@ -2,7 +2,8 @@ package com.droie.entity;
 
 public class Card {
 
-    private String id;
+    private int id;
+    private String number;
     private boolean blocked;
     private int pin;
     private int invalidAttempts;
@@ -11,24 +12,33 @@ public class Card {
     public Card() {
     }
 
-    public Card(String id, boolean blocked, int pin, int invalidAttempts, float balance) {
+    public Card(int id, String number, boolean blocked, int pin, int invalidAttempts, float balance) {
 
         this.id = id;
+        this.number = number;
         this.blocked = blocked;
         this.pin = pin;
         this.invalidAttempts = invalidAttempts;
         this.balance = balance;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public boolean isBlocked() {
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public boolean getBlocked() {
         return blocked;
     }
 

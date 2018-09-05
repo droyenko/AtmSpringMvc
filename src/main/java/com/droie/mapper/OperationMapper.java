@@ -11,7 +11,7 @@ public class OperationMapper implements RowMapper<Operation> {
         Operation operation = new Operation();
         operation.setId(resultSet.getInt("operation_id"));
         operation.setCardId(resultSet.getString("card_id"));
-        operation.setTime(resultSet.getTimestamp("time").toLocalDateTime());
+        operation.setTime(resultSet.getTimestamp("time"));
         operation.setAmount(resultSet.getFloat("amount"));
         operation.setType(resultSet.getString("type"));
         return operation;

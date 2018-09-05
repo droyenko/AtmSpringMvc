@@ -1,19 +1,19 @@
 package com.droie.entity;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Operation {
 
     private int id;
     private String cardId;
-    private LocalDateTime time;
+    private Timestamp time;
     private float amount;
     private String type;
 
     public Operation() {
     }
 
-    public Operation(String cardId, LocalDateTime time, float amount, String type) {
+    public Operation(String cardId, Timestamp time, float amount, String type) {
 
         this.cardId = cardId;
         this.time = time;
@@ -38,11 +38,11 @@ public class Operation {
         this.cardId = cardId;
     }
 
-    public LocalDateTime getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 

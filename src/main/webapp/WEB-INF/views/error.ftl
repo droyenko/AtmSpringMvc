@@ -5,9 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>I'm first template</h1>
-<a href="/cards">go to Cards</a>
-    <br>
-<a href="/operations">go to Operations</a>
+<h1>Card is either blocked or doesn't exits</h1>
+<a href="/">Back</a>
 </body>
 </html>

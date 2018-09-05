@@ -7,6 +7,6 @@
 <body>
     <h1>Hello!!!</h1>
     <br>
-    <a href="/hello">Hello page!</a>
+    <a href="/checkCardPage">Main ATM screen</a>
 </body>
 </html>

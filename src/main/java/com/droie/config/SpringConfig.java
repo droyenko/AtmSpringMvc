@@ -1,9 +1,5 @@
 package com.droie.config;
 
-import com.droie.dao.UserDao;
-import com.droie.dao.UserDaoImpl;
-import com.droie.service.UserService;
-import com.droie.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
