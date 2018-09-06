@@ -49,14 +49,14 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public int getPin(String number) {
+    public String getPin(String number) {
         String sql = "SELECT pin FROM card WHERE card_number=?";
-        return jdbcTemplate.queryForObject(sql, new Object[] {number}, Integer.class);
+        return jdbcTemplate.queryForObject(sql, new Object[] {number}, String.class);
     }
 
     @Override
     public void blockCard(String number) {
-        String sql = "UPDATE card SET blocked=true WHERE card_number=?";
+        String sql = "UPDATE card SET blocked=true, invalid_pin_attempts=0 WHERE card_number=?";
         jdbcTemplate.update(sql, number);
     }
 
@@ -74,5 +74,23 @@ public class CardDaoImpl implements CardDao {
     public int getAttempt(String number) {
         String sql = "SELECT invalid_pin_attempts FROM card WHERE card_number=?";
         return jdbcTemplate.queryForObject(sql, new Object[] {number}, Integer.class);
+    }
+
+    @Override
+    public void setAttempt(String number, int value) {
+        String sql = "UPDATE card SET invalid_pin_attempts=? WHERE card_number=?";
+        jdbcTemplate.update(sql, value, number);
+    }
+
+    @Override
+    public Float getBalance(String number) {
+        String sql = "SELECT balance FROM card WHERE card_number=?";
+        return jdbcTemplate.queryForObject(sql, new Object[] {number}, Float.class);
+    }
+
+    @Override
+    public void setBalance(String number, float value) {
+        String sql = "UPDATE card SET balance=? WHERE card_number=?";
+        jdbcTemplate.update(sql, value, number);
     }
 }

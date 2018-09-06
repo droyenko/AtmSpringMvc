@@ -6,6 +6,6 @@
 </head>
 <body>
 <h1>${message}</h1>
-<a href="/">Back</a>
+<a href="/checkCardPage">Back</a>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <title>Title</title>
     <script>
         function insert(num) {
-            document.getElementById('card_id_input').value += num;
+            document.getElementById('card_pin_input').value += num;
         }
 
     </script>
@@ -38,9 +38,9 @@
 </head>
 <body>
 <div class="main">
-    <form name="card" action="/checkCard" method="post">
-        <h1>Please enter card number</h1>
-        <input class="card_id" id="card_id_input" name="number" type="text"/>
+    <form name="card" action="/checkPin" method="post">
+        <h1>Please enter card PIN</h1>
+        <input class="card_id" id="card_pin_input" name="pin" type="password"/>
         <table>
             <tr>
                 <td><input class="button" type="button" value="7" onclick="insert(7)"></td>
@@ -60,7 +60,7 @@
             <tr>
                 <td><input class="button" type="button" value="0" onclick="insert(0)"></td>
                 <td><input class="button" type="submit" value="OK"></td>
-                <td><input class="clear-button" type="button" value="Clear" onclick="document.getElementById('card_id_input').value = ''"></td>
+                <td><input class="clear-button" type="button" value="Clear" onclick="document.getElementById('card_pin_input').value = ''"></td>
             </tr>
         </table>
     </form>

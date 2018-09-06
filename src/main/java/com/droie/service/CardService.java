@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CardService {
 
+    String getLocalCardNumber();
+
     void save(Card card);
 
     Card getById(int id);
@@ -20,13 +22,17 @@ public interface CardService {
 
     Card getCardByNumber(String number);
 
-    int getPin(String number);
+    String getPin(String number);
 
     void blockCard(String number);
+
+    float getBalance(String number);
 
     String isBlocked(String number);
 
     int getAttempt(String number);
 
     String checkPin(Integer pin);
+
+    String processWithdrawal(float balance);
 }

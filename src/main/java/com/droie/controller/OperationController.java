@@ -1,6 +1,7 @@
 package com.droie.controller;
 
 import com.droie.entity.Operation;
+import com.droie.service.CardService;
 import com.droie.service.OperationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class OperationController {
 
     @Autowired
     public OperationService operationService;
+
+    @Autowired
+    public CardService cardService;
 
     @GetMapping("/operations")
     public String getAllOperations(Model model) {
@@ -63,5 +67,28 @@ public class OperationController {
         logger.error("POST:/updateOperation controller");
         operationService.update(operation);
         return "redirect:/operation/" + operation.getId();
+    }
+
+    @GetMapping("/operationsPage")
+    public String operationsPage() {
+        return "operationsPage";
+    }
+
+    @GetMapping("/balanceReport")
+    public String balanceReport() {
+        return "balanceReport";
+    }
+
+    @PostMapping("/balanceReport")
+    public String saveBalanceOperation(@ModelAttribute("operation") Operation operation, Model model) {
+        operationService.save(operation);
+        model.addAttribute("operation", operation);
+        model.addAttribute("balance", cardService.getBalance(operation.getCardId()));
+        return "balanceReport";
+    }
+
+    @GetMapping("/withdrawalPage")
+    public String withdrawalPage() {
+        return "withdrawalPage";
     }
 }

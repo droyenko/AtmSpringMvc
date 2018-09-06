@@ -1,13 +1,18 @@
 package com.droie.service.impl;
 
 import com.droie.dao.CardDao;
+import com.droie.dao.OperationDao;
 import com.droie.entity.Card;
+import com.droie.entity.Operation;
 import com.droie.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -15,7 +20,15 @@ public class CardServiceImpl implements CardService {
     @Autowired
     public CardDao cardDao;
 
+    @Autowired
+    public OperationDao operationDao;
+
     private ThreadLocal<String> localCardNumber = new ThreadLocal<>();
+
+    @Override
+    public String getLocalCardNumber() {
+        return localCardNumber.get();
+    }
 
     @Override
     public void save(Card card) {
@@ -48,13 +61,23 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public int getPin(String number) {
+    public String getPin(String number) {
         return cardDao.getPin(number);
     }
 
     @Override
     public void blockCard(String number) {
         cardDao.blockCard(number);
+    }
+
+    @Override
+    public int getAttempt(String number) {
+        return cardDao.getAttempt(number);
+    }
+
+    @Override
+    public float getBalance(String number) {
+        return cardDao.getBalance(number);
     }
 
     @Override
@@ -74,21 +97,46 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public int getAttempt(String number) {
-        return cardDao.getAttempt(number);
+    public String checkPin(Integer pin) {
+        String message = null;
+        String cardNumber = localCardNumber.get();
+        String actualPin = cardDao.getPin(cardNumber);
+
+        String enteredPinMd5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(pin.toString());
+
+        if (!enteredPinMd5.equals(actualPin)) {
+            int attempt = cardDao.getAttempt(cardNumber);
+            if (attempt < 3) {
+                cardDao.setAttempt(cardNumber, attempt + 1);
+                message = String.format("Wrong PIN. You have %d attempts left", 4 - attempt);
+            } else {
+                cardDao.blockCard(cardNumber);
+                message = "You have entered wrong PIN 4 times. Your card is blocked";
+            }
+        } else {
+            cardDao.setAttempt(cardNumber, 0);
+        }
+        return message;
     }
 
     @Override
-    public String checkPin(Integer pin) {
+    public String processWithdrawal(float withdrawalAmount) {
+        String message = null;
         String cardNumber = localCardNumber.get();
-        Integer actualPin = cardDao.getPin(cardNumber);
+        float actualBalance = cardDao.getBalance(cardNumber);
 
-        UUID a = UUID.fromString(String.valueOf(pin));
-        UUID b = UUID.fromString(String.valueOf(actualPin));
-
-        if (b.equals(a)) {
-
+        if (withdrawalAmount > actualBalance) {
+            message = "You don't have sufficient amount on your account";
+        } else {
+            operationDao.save(new Operation(
+                    cardNumber,
+                    new Timestamp(new Date().getTime()),
+                    withdrawalAmount,
+                    "withdrawal"
+            ));
+            cardDao.setBalance(cardNumber, actualBalance - withdrawalAmount);
         }
-        return "";
+
+        return message;
     }
 }

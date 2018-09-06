@@ -19,11 +19,17 @@ public interface CardDao {
 
     Card getCardByNumber(String number);
 
-    int getPin(String number);
+    String getPin(String number);
 
     void blockCard(String number);
 
     Boolean isBlocked(String number);
 
     int getAttempt(String number);
+
+    void setAttempt(String number, int value);
+
+    Float getBalance(String number);
+
+    void setBalance(String number, float value);
 }

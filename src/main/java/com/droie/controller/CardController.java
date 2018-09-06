@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/")
 public class CardController {
@@ -20,7 +22,7 @@ public class CardController {
     @GetMapping("/")
     public String index() {
         logger.error("index controller");
-        return "index";
+        return "checkCardPage";
     }
 
     @GetMapping("/hello")
@@ -89,27 +91,48 @@ public class CardController {
 
         if (message !=null) {
             model.addAttribute("message", message);
-            pageToShow = "error";
+            pageToShow = "cardNumberError";
         } else {
-            pageToShow = "pinPage";
+            pageToShow = "checkPinPage";
         }
 
         return pageToShow;
+    }
+
+    @GetMapping("/checkPinPage")
+    public String checkPinPage() {
+        return "checkPinPage";
     }
 
     @PostMapping("/checkPin")
     public String checkPin(@ModelAttribute("card") Card card, Model model) {
         String pageToShow;
-        String message = cardService.isBlocked(card.getNumber());
+        String message = cardService.checkPin(card.getPin());
 
-        if (message !=null) {
+        if (message != null) {
             model.addAttribute("message", message);
-            pageToShow = "error";
+            pageToShow = "cardPinError";
         } else {
-            pageToShow = "pinPage";
+            model.addAttribute("cardNumber", cardService.getLocalCardNumber());
+            pageToShow = "operationsPage";
         }
 
         return pageToShow;
     }
 
+    @PostMapping("/checkBalance")
+    public String checkBalance(@ModelAttribute("card") Card card, Model model) {
+        String pageToShow;
+        String message = cardService.processWithdrawal(card.getBalance());
+
+        if (message != null) {
+            model.addAttribute("message", message);
+            pageToShow = "withdrawalError";
+        } else {
+            model.addAttribute("card", card);
+            pageToShow = "withdrawalReport";
+        }
+
+        return pageToShow;
+    }
 }

@@ -5,12 +5,9 @@
     <title>Title</title>
     <script>
         function insert(num) {
-            document.getElementById('card_id_input').value += num
+            document.getElementById('withdrawal_input').value += num;
         }
 
-        function clear() {
-            document.getElementById('card_id_input').value = ''
-        }
     </script>
     <style>
         *{
@@ -31,7 +28,7 @@
             margin: 2px;
             cursor: pointer;
         }
-        .card_id{
+        .withdrawal_filed{
             width: 217px;
             margin: 5px;
             font-size: 25px;
@@ -41,8 +38,9 @@
 </head>
 <body>
 <div class="main">
-    <form name="card" action="/checkPin" method="post">
-        <input class="card_id" id="card_pin_input" name="number" type="password"/>
+    <form name="card" action="/checkBalance" method="post">
+        <h1>Please enter withdrawal amount</h1>
+        <input class="withdrawal_filed" id="withdrawal_input" name="balance" type="text"/>
         <table>
             <tr>
                 <td><input class="button" type="button" value="7" onclick="insert(7)"></td>
@@ -62,7 +60,7 @@
             <tr>
                 <td><input class="button" type="button" value="0" onclick="insert(0)"></td>
                 <td><input class="button" type="submit" value="OK"></td>
-                <td><input class="clear-button" type="button" value="Clear" onclick="clear()"></td>
+                <td><input class="clear-button" type="button" value="Clear" onclick="document.getElementById('withdrawal_input').value = ''"></td>
             </tr>
         </table>
     </form>
