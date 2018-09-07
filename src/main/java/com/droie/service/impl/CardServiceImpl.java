@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -23,11 +23,14 @@ public class CardServiceImpl implements CardService {
     @Autowired
     public OperationDao operationDao;
 
-    private ThreadLocal<String> localCardNumber = new ThreadLocal<>();
+    @Autowired
+    public AuthServiceImpl authService;
+
+    private Map<String, String> localCardNumber = new HashMap<>();
 
     @Override
-    public String getLocalCardNumber() {
-        return localCardNumber.get();
+    public String getLocalCardNumber(String key) {
+        return localCardNumber.get(key);
     }
 
     @Override
@@ -90,7 +93,7 @@ public class CardServiceImpl implements CardService {
         } else if (isBlocked) {
             message = "Card is blocked";
         } else {
-            localCardNumber.set(number);
+            localCardNumber.put(authService.generate(), number);
         }
 
         return message;
@@ -99,7 +102,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public String checkPin(Integer pin) {
         String message = null;
-        String cardNumber = localCardNumber.get();
+        String cardNumber = getLocalCardNumber(authService.getAuthKey());
         String actualPin = cardDao.getPin(cardNumber);
 
         String enteredPinMd5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(pin.toString());
@@ -108,7 +111,7 @@ public class CardServiceImpl implements CardService {
             int attempt = cardDao.getAttempt(cardNumber);
             if (attempt < 3) {
                 cardDao.setAttempt(cardNumber, attempt + 1);
-                message = String.format("Wrong PIN. You have %d attempts left", 4 - attempt);
+                message = String.format("Wrong PIN. You have %d attempts left", 3 - attempt);
             } else {
                 cardDao.blockCard(cardNumber);
                 message = "You have entered wrong PIN 4 times. Your card is blocked";
@@ -120,10 +123,10 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public String processWithdrawal(float withdrawalAmount) {
+    public String processWithdrawal(float withdrawalAmount, String cardNumber) {
         String message = null;
-        String cardNumber = localCardNumber.get();
-        float actualBalance = cardDao.getBalance(cardNumber);
+        Card card = cardDao.getCardByNumber(cardNumber);
+        float actualBalance = card.getBalance();
 
         if (withdrawalAmount > actualBalance) {
             message = "You don't have sufficient amount on your account";

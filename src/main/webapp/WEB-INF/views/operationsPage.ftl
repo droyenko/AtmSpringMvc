@@ -8,10 +8,10 @@
 <body>
     <h1>Please select operation</h1>
     <form name="operation" action="/balanceReport" method="post">
-        <input type="text" name="cardId" value="${cardNumber}">
-        <input type="text" name="time" id="dateTime">
-        <input type="text" name="amount" value="0">
-        <input type="text" name="type" value="balance">
+        <input type="hidden" name="cardId" value="${cardNumber}">
+        <input type="hidden" name="time" id="dateTime">
+        <input type="hidden" name="amount" value="0">
+        <input type="hidden" name="type" value="balance">
         <input type="submit" value="Balance" />
     </form>
     <form action="/withdrawalPage">

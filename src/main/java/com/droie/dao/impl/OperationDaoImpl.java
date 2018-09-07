@@ -2,8 +2,7 @@ package com.droie.dao.impl;
 
 import com.droie.dao.OperationDao;
 import com.droie.entity.Operation;
-import com.droie.mapper.CardMapper;
-import com.droie.mapper.OperationMapper;
+import com.droie.dao.mapper.OperationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,5 +38,11 @@ public class OperationDaoImpl implements OperationDao {
     public void delete(int operation_id) {
         String sql = "DELETE FROM operation WHERE operation_id=?";
         jdbcTemplate.update(sql, operation_id);
+    }
+
+    @Override
+    public Operation getLastWithdrawalOperation(String cardNumber) {
+        String sql = "SELECT * FROM operation WHERE card_id=? AND type='withdrawal' ORDER BY operation_id DESC LIMIT 1";
+        return jdbcTemplate.queryForObject(sql, new OperationMapper(), cardNumber);
     }
 }

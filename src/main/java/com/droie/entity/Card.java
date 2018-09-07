@@ -5,14 +5,14 @@ public class Card {
     private int id;
     private String number;
     private boolean blocked;
-    private int pin;
+    private String pin;
     private int invalidAttempts;
     private float balance;
 
     public Card() {
     }
 
-    public Card(int id, String number, boolean blocked, int pin, int invalidAttempts, float balance) {
+    public Card(int id, String number, boolean blocked, String pin, int invalidAttempts, float balance) {
 
         this.id = id;
         this.number = number;
@@ -46,11 +46,11 @@ public class Card {
         this.blocked = blocked;
     }
 
-    public int getPin() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(int pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 

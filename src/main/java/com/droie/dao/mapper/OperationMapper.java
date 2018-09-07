@@ -1,4 +1,4 @@
-package com.droie.mapper;
+package com.droie.dao.mapper;
 
 import com.droie.entity.Operation;
 import org.springframework.jdbc.core.RowMapper;

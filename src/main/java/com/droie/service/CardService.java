@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface CardService {
 
-    String getLocalCardNumber();
+
+    String getLocalCardNumber(String key);
 
     void save(Card card);
 
@@ -34,5 +35,5 @@ public interface CardService {
 
     String checkPin(Integer pin);
 
-    String processWithdrawal(float balance);
+    String processWithdrawal(float balance, String cardNumber);
 }

@@ -2,7 +2,7 @@ package com.droie.dao.impl;
 
 import com.droie.dao.CardDao;
 import com.droie.entity.Card;
-import com.droie.mapper.CardMapper;
+import com.droie.dao.mapper.CardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

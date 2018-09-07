@@ -33,4 +33,9 @@ public class OperationServiceImpl implements OperationService {
     public void delete(int id) {
         operationDao.delete(id);
     }
+
+    @Override
+    public Operation getLastWithdrawalOperation(String cardNumber) {
+        return operationDao.getLastWithdrawalOperation(cardNumber);
+    }
 }

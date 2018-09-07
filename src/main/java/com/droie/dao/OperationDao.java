@@ -15,4 +15,6 @@ public interface OperationDao {
     void update(Operation operation);
 
     void delete(int id);
+
+    Operation getLastWithdrawalOperation(String cardNumber);
 }
