@@ -28,7 +28,7 @@
             margin: 2px;
             cursor: pointer;
         }
-        .withdrawal_filed{
+        .card_pin{
             width: 217px;
             margin: 5px;
             font-size: 25px;
@@ -40,7 +40,7 @@
 <div class="main">
     <form name="card" action="/checkPin" method="post">
         <h1>Please enter card PIN</h1>
-        <input class="card_id" id="card_pin_input" name="pin" type="password"/>
+        <input class="card_pin" id="card_pin_input" name="pin" type="password" readonly/>
         <table>
             <tr>
                 <td><input class="button" type="button" value="7" onclick="insert(7)"></td>

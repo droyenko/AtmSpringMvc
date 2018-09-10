@@ -3,12 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script>
-        function insert(num) {
-            document.getElementById('card_id_input').value += num;
-        }
 
-    </script>
     <style>
         *{
             margin: 0;
@@ -28,19 +23,19 @@
             margin: 2px;
             cursor: pointer;
         }
-        .withdrawal_filed{
-            width: 217px;
+        .card_id{
+            width: 250px;
             margin: 5px;
             font-size: 25px;
             padding: 5px;
         }
     </style>
 </head>
-<body>
+<body onload="clear()">
 <div class="main">
     <form name="card" action="/checkCard" method="post">
         <h1>Please enter card number</h1>
-        <input class="card_id" id="card_id_input" name="number" type="text"/>
+        <input class="card_id" id="card_id_input" name="number" type="text" readonly/>
         <table>
             <tr>
                 <td><input class="button" type="button" value="7" onclick="insert(7)"></td>
@@ -65,6 +60,20 @@
         </table>
     </form>
 </div>
+<script>
+    function insert(num) {
+        var currentValue = document.getElementById('card_id_input').value;
+        if (currentValue.replace(/-/g, '').length % 4 == 0 && currentValue.length != 0) {
+            document.getElementById('card_id_input').value += -num
+        } else {
+            document.getElementById('card_id_input').value += num;
+        }
+    }
 
+    function clear() {
+        document.getElementById('card_id_input').value = '';
+    }
+
+</script>
 </body>
 </html>

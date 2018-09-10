@@ -8,6 +8,10 @@
             document.getElementById('withdrawal_input').value += num;
         }
 
+        function clear() {
+            document.getElementById('card_id_input').value = '';
+        }
+
     </script>
     <style>
         *{
@@ -36,7 +40,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="clear()>
 <div class="main">
     <form name="operation" action="/checkBalance" method="post">
         <h1>Please enter withdrawal amount</h1>
@@ -64,10 +68,10 @@
             </tr>
         </table>
         <form action="/operationsPage">
-            <input type="submit" value="Back" />
+            <input class="clear-button" type="submit" value="Back" />
         </form>
         <form action="/">
-            <input type="submit" value="Exit" />
+            <input class="clear-button" type="submit" value="Exit" />
         </form>
     </form>
 </div>

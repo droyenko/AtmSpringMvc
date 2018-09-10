@@ -2,12 +2,10 @@ package com.droie.service;
 
 import com.droie.entity.Card;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface CardService {
-
-
-    String getLocalCardNumber(String key);
 
     void save(Card card);
 
@@ -33,7 +31,7 @@ public interface CardService {
 
     int getAttempt(String number);
 
-    String checkPin(Integer pin);
+    String checkPin(Integer pin, String cardNumber, HttpServletRequest request);
 
     String processWithdrawal(float balance, String cardNumber);
 }

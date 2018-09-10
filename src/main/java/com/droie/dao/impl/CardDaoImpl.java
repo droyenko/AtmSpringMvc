@@ -56,7 +56,7 @@ public class CardDaoImpl implements CardDao {
 
     @Override
     public void blockCard(String number) {
-        String sql = "UPDATE card SET blocked=true, invalid_pin_attempts=0 WHERE card_number=?";
+        String sql = "UPDATE card SET blocked=true WHERE card_number=?";
         jdbcTemplate.update(sql, number);
     }
 

@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+<style>
+    .button{
+        width: 150px;
+        height: 50px;
+        font-size: 25px;
+        margin: 2px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <h1>Please select operation</h1>
@@ -12,13 +20,13 @@
         <input type="hidden" name="time" id="dateTime">
         <input type="hidden" name="amount" value="0">
         <input type="hidden" name="type" value="balance">
-        <input type="submit" value="Balance" />
+        <input class="button" type="submit" value="Balance" />
     </form>
     <form action="/withdrawalPage">
-        <input type="submit" value="Withdrawal" />
+        <input class="button" type="submit" value="Withdrawal" />
     </form>
     <form action="/">
-        <input type="submit" value="Exit" />
+        <input class="button" type="submit" value="Exit" />
     </form>
 
     <script>

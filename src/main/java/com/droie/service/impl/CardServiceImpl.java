@@ -8,11 +8,10 @@ import com.droie.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -25,13 +24,6 @@ public class CardServiceImpl implements CardService {
 
     @Autowired
     public AuthServiceImpl authService;
-
-    private Map<String, String> localCardNumber = new HashMap<>();
-
-    @Override
-    public String getLocalCardNumber(String key) {
-        return localCardNumber.get(key);
-    }
 
     @Override
     public void save(Card card) {
@@ -93,16 +85,15 @@ public class CardServiceImpl implements CardService {
         } else if (isBlocked) {
             message = "Card is blocked";
         } else {
-            localCardNumber.put(authService.generate(), number);
+            authService.setLocalCardNumber(number);
         }
 
         return message;
     }
 
     @Override
-    public String checkPin(Integer pin) {
+    public String checkPin(Integer pin, String cardNumber, HttpServletRequest request) {
         String message = null;
-        String cardNumber = getLocalCardNumber(authService.getAuthKey());
         String actualPin = cardDao.getPin(cardNumber);
 
         String enteredPinMd5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(pin.toString());
@@ -118,6 +109,7 @@ public class CardServiceImpl implements CardService {
             }
         } else {
             cardDao.setAttempt(cardNumber, 0);
+            authService.setAuthenticated(request);
         }
         return message;
     }
