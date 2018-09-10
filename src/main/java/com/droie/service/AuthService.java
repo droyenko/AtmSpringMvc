@@ -7,11 +7,7 @@ public interface AuthService {
 
     String getLocalCardNumber(HttpServletRequest request);
 
-    String getAuthKey();
-
-    void setAuthKey(String authKey);
-
-    void setLocalCardNumber(String number);
+    String setLocalCardNumber(String number);
 
     void setAuthenticated(HttpServletRequest request);
 
@@ -21,7 +17,7 @@ public interface AuthService {
 
     String getAuthFromRequest(HttpServletRequest request);
 
-    void setAuthToResponse(HttpServletResponse response, HttpServletRequest request);
+    void setAuthToResponse(String authKey, HttpServletResponse response);
 
     void clearCookies(HttpServletResponse response);
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    private ThreadLocal<String> authKey = new ThreadLocal<>();
+
     private String headerName = "secretKey";
 
     private Map<String, AuthData> localCardNumber = new HashMap<>();
@@ -45,18 +45,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String getAuthKey() {
-        return authKey.get();
-    }
-
-    @Override
-    public void setAuthKey(String authKey) {
-        this.authKey.set(authKey);
-    }
-
-    @Override
-    public void setLocalCardNumber(String number) {
-        localCardNumber.put(generate(), new AuthData(number, false));
+    public String setLocalCardNumber(String number) {
+        String authKey = generate();
+        localCardNumber.put(authKey, new AuthData(number, false));
+        return authKey;
     }
 
     @Override
@@ -71,9 +63,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String generate() {
-        String uuid = UUID.randomUUID().toString();
-        setAuthKey(uuid);
-        return uuid;
+        return UUID.randomUUID().toString();
     }
 
     @Override
@@ -88,8 +78,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void setAuthToResponse(HttpServletResponse response, HttpServletRequest request) {
-        Cookie cookie = new Cookie(headerName, getAuthKey());
+    public void setAuthToResponse(String authKey, HttpServletResponse response) {
+        Cookie cookie = new Cookie(headerName, authKey);
         response.addCookie(cookie);
     }
 

@@ -1,7 +1,6 @@
 package com.droie.service.impl;
 
 import com.droie.dao.CardDao;
-import com.droie.dao.OperationDao;
 import com.droie.entity.Card;
 import com.droie.entity.Operation;
 import com.droie.service.CardService;
@@ -19,7 +18,7 @@ public class CardServiceImpl implements CardService {
     public CardDao cardDao;
 
     @Autowired
-    public OperationDao operationDao;
+    public OperationServiceImpl operationService;
 
     @Autowired
     public AuthServiceImpl authService;
@@ -58,8 +57,6 @@ public class CardServiceImpl implements CardService {
             message = "There is no card with number: " + number;
         } else if (isBlocked) {
             message = "Card is blocked";
-        } else {
-            authService.setLocalCardNumber(number);
         }
 
         return message;
@@ -97,7 +94,7 @@ public class CardServiceImpl implements CardService {
         if (withdrawalAmount > actualBalance) {
             message = "You don't have sufficient amount on your account";
         } else {
-            operationDao.save(new Operation(
+            operationService.save(new Operation(
                     cardNumber,
                     new Timestamp(new Date().getTime()),
                     withdrawalAmount,

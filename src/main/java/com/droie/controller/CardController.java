@@ -41,12 +41,14 @@ public class CardController {
     @PostMapping("/checkCard")
     public String checkCard(@ModelAttribute("card") Card card, Model model, HttpServletResponse response, HttpServletRequest request) {
         String pageToShow;
-        String message = cardService.isBlocked(card.getNumber().replace("-", ""));
+        String trimedCardNumber = card.getNumber().replace("-", "");
+        String message = cardService.isBlocked(trimedCardNumber);
         if (message !=null) {
             model.addAttribute("message", message);
             pageToShow = "errorPage";
         } else {
-            authService.setAuthToResponse(response, request);
+            String authKey = authService.setLocalCardNumber(trimedCardNumber);
+            authService.setAuthToResponse(authKey, response);
             pageToShow = "checkPinPage";
         }
 
