@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -24,31 +23,6 @@ public class CardServiceImpl implements CardService {
 
     @Autowired
     public AuthServiceImpl authService;
-
-    @Override
-    public void save(Card card) {
-        cardDao.save(card);
-    }
-
-    @Override
-    public Card getById(int id) {
-        return cardDao.getById(id);
-    }
-
-    @Override
-    public List<Card> findAll() {
-        return cardDao.findAll();
-    }
-
-    @Override
-    public void update(Card card) {
-        cardDao.update(card);
-    }
-
-    @Override
-    public void delete(int id) {
-        cardDao.delete(id);
-    }
 
     @Override
     public Card getCardByNumber(String number) {

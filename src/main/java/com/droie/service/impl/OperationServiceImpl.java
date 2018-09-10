@@ -6,8 +6,6 @@ import com.droie.service.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class OperationServiceImpl implements OperationService {
 
@@ -16,22 +14,6 @@ public class OperationServiceImpl implements OperationService {
 
     public void save(Operation operation) {
         operationDao.save(operation);
-    }
-
-    public Operation getById(int id) {
-        return operationDao.getById(id);
-    }
-
-    public List<Operation> findAll() {
-        return operationDao.findAll();
-    }
-
-    public void update(Operation operation) {
-        operationDao.update(operation);
-    }
-
-    public void delete(int id) {
-        operationDao.delete(id);
     }
 
     @Override

@@ -16,32 +16,6 @@ public class CardDaoImpl implements CardDao {
     @Autowired
     public JdbcTemplate jdbcTemplate;
 
-    public void save(Card card) {
-        String sql = "INSERT INTO card (card_number, blocked, pin, invalid_pin_attempts, balance) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, card.getNumber(), card.getBlocked(), card.getPin(), card.getInvalidAttempts(), card.getBalance());
-    }
-
-    public Card getById(int card_id) {
-        String sql = "SELECT * FROM card WHERE card_id=?";
-        return jdbcTemplate.queryForObject(sql, new CardMapper(), card_id);
-    }
-
-    public List<Card> findAll() {
-        String sql = "SELECT * FROM card";
-        return jdbcTemplate.query(sql, new CardMapper());
-    }
-
-    public void update(Card card) {
-        String sql = "UPDATE card SET card_number=?, blocked=?, pin=?, invalid_pin_attempts=?, balance=? WHERE card_id=?";
-        jdbcTemplate.update(sql, card.getNumber(), card.getBlocked(), card.getPin(), card.getInvalidAttempts(), card.getBalance(), card.getId());
-    }
-
-    public void delete(int card_id) {
-        String sql = "DELETE FROM card WHERE card_id=?";
-        jdbcTemplate.update(sql, card_id);
-    }
-
-
     @Override
     public Card getCardByNumber(String number) {
         String sql = "SELECT * FROM card WHERE card_number=?";
