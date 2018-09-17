@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -14,7 +15,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = {"com.droie.service", "com.droie.dao"})
 public class SpringConfig {
 
-    private static Properties properties = new PropertyReader().getProperties("/Users/droie/Practice/AtmSpringMvc/src/main/resources/db.properties");
+    private static Properties properties = new PropertyReader().getProperties("/home/droie/Work/practice/AtmSpringMvc/src/main/resources/db.properties");
 
     private static final String DRIVER = properties.getProperty("driver");
     private static final String URL = properties.getProperty("url");
@@ -22,8 +23,8 @@ public class SpringConfig {
     private static final String PASS =properties.getProperty("password");
 
     @Bean
-    public JdbcTemplate getJdbcTemplate() {
-        return new JdbcTemplate(getDataSource());
+    public NamedParameterJdbcTemplate getJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(getDataSource());
     }
 
     @Bean
