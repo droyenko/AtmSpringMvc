@@ -1,5 +1,6 @@
 package com.droie.config;
 
+import com.droie.util.PropertyReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,10 +8,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"com.droie.service", "com.droie.dao"})
 public class SpringConfig {
+
+    private static Properties properties = new PropertyReader().getProperties("/Users/droie/Practice/AtmSpringMvc/src/main/resources/db.properties");
+
+    private static final String DRIVER = properties.getProperty("driver");
+    private static final String URL = properties.getProperty("url");
+    private static final String USER = properties.getProperty("username");
+    private static final String PASS =properties.getProperty("password");
 
     @Bean
     public JdbcTemplate getJdbcTemplate() {
@@ -20,10 +29,10 @@ public class SpringConfig {
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/atm");
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
+        dataSource.setDriverClassName(DRIVER);
+        dataSource.setUrl(URL);
+        dataSource.setUsername(USER);
+        dataSource.setPassword(PASS);
         return dataSource;
     }
 
