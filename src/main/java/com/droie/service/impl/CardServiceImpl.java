@@ -65,17 +65,17 @@ public class CardServiceImpl implements CardService {
     @Override
     public String checkPin(Integer pin, String cardNumber, HttpServletRequest request) {
         String message = null;
-        String actualPin = cardDao.getPin(cardNumber);
+        String actualPin = getPin(cardNumber);
 
         String enteredPinMd5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(pin.toString());
 
         if (!enteredPinMd5.equals(actualPin)) {
-            int attempt = cardDao.getAttempt(cardNumber);
+            int attempt = getAttempt(cardNumber);
             if (attempt < 3) {
                 cardDao.setAttempt(cardNumber, attempt + 1);
                 message = String.format("Wrong PIN. You have %d attempts left", 3 - attempt);
             } else {
-                cardDao.blockCard(cardNumber);
+                blockCard(cardNumber);
                 message = "You have entered wrong PIN 4 times. Your card is blocked";
             }
         } else {

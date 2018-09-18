@@ -3,7 +3,6 @@ package com.droie.service;
 import com.droie.entity.Card;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public interface CardService {
 
