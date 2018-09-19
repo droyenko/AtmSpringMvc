@@ -1,6 +1,7 @@
 package com.droie.service.impl;
 
 import com.droie.service.AuthService;
+import com.sun.istack.internal.Nullable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -21,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
         private String cardNumber;
         private Boolean authenticated;
 
-        public AuthData(String cardNumber, Boolean authenticated) {
+        AuthData(String cardNumber, Boolean authenticated) {
             this.cardNumber = cardNumber;
             this.authenticated = authenticated;
         }
@@ -52,6 +53,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Nullable
     public void setAuthenticated(HttpServletRequest request) {
         localCardNumber.get(getAuthFromRequest(request)).setAuthenticated(true);
     }

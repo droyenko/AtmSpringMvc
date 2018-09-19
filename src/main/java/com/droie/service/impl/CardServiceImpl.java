@@ -88,7 +88,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public String processWithdrawal(float withdrawalAmount, String cardNumber) {
         String message = null;
-        Card card = cardDao.getCardByNumber(cardNumber);
+        Card card = getCardByNumber(cardNumber);
         float actualBalance = card.getBalance();
 
         if (withdrawalAmount > actualBalance) {
